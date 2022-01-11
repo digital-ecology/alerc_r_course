@@ -1,0 +1,161 @@
+---
+title: "ALERC R course"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+## Introducing RStudio
+Open RStudio.
+This is the standard layout for RStudio, but you can change it if you like by dragging the panes around.  We are going to do a tour of RStudio so you know where things are.  Currently you should see 3 panes.
+
+Lower right pane – Files, Plots, Packages, Help, Viewer
+
+Files - shows all of the files in the active directory.  This is important, especially when you are doing a project, as you can see what files you have already created from there.  You can also open files from there to work on them.
+
+Plots – this is where any plots you create are shown.  Useful for checking that you have got the plot correct.
+
+Packages – these are all the base and extended libraries for R that provide functions for doing things.  You can install and update packages from this window.  This lists all of the packages you currently have installed in R.  We will come back to this shortly.
+
+Help – this is where all of the help files for the packages are displayed.  There is a search function at the top which can help you find information on functions in all of your installed packages.
+
+Viewer – like plot, but for non-plot outputs.  We will use this later.
+
+Coming back to packages.  There is also a search function here, allowing you to find installed packages.  Hopefully you ran the script I sent you – if so one of the packages you will have installed is dplyr.  If you type dplyr into the search box, it should filter your list to find packages with a similar name.  
+
+If you now click on the name ‘dplyr’ it will open up the help page (notice the change in tab) for the package.  Here are listed all of the functions in dplyr.  We can now click on the name of a function (lets choose add_count) to get the help page for the function.
+The help pages are all laid out in a similar way:
+    • Description tells you what the function does
+    • Usage tells you what each of the arguments for a function are
+    • Arguments list the arguments, what they mean and often what type of data they should be
+    • Value tells you what the function will return (e.g. a number, a string, a dataframe etc…)
+    • Examples provides examples of how to use the function.  These are incredibly useful!
+You will use the help pages a lot to work out what arguments you need to provide in your code.  For some functions, there are lots of arguments, and this is particularly true when making maps of graphics, as there is so much to control, such as colours and thickness of lines etc…  But this also means you can be incredibly specific about how something appears.
+
+Top right pane – Environment, History, Connections, Tutorial.  Other things will appear here as you use more of RStudio’s functionality.
+
+Environment – this details all of the objects, functions and values that you have created in your script.  It is incredibly useful, as it provides summary information about the object and its values.  We will explore this more later, but you will use this a lot.
+
+History – keeps a running list of all of the lines of code you have run.  I never use this, as I write scripts (more of that later), but this may be handy!
+
+Connections – manage connections to databases here.  We will explore this later.
+
+Tutorial – provides tutorials for using R.  I have not used this, but why not give it a go!
+
+The main window is the console – this is where you enter code and it runs.  If you type code here, it will not be saved so that you can return to it later.  But if you create objects or functions here, then they will be saved in your environment for this session.
+
+## Key concepts
+I have introduced lots of new words there, so lets delve into the key things you need to know about R.
+
+Objects – everything in R is an object.  The significance of this will become clearer the more you use R, but suffice it to say, if you assign a value to something, you have created an object.  The utility of objects is that instead of having to run all of your code over and over again, you can assign things to an object, and then use that object again later.
+For example, you read into R a csv of data.  Instead of reading it in and then immediately doing all of your cleaning and analysis, you assign it to an object for later use.  Then instead of having to write out all of the code again, you just use the name of the object to represent data in your code.
+Here is an example. Greeting a user. [add code for this]
+```{r greeting}
+
+x <- "Dan"
+
+hello <- function(name){
+  paste("Hello", name)
+}
+
+hello(x)
+
+```
+
+This makes writing scripts for repetitive tasks much easier, as you just re-use your code for new data.  Anything can be an object, and everything is an object. If it has a name, it is an object.
+
+Functions – functions are the doing parts of R.  You are probably familiar with functions from other places, like Excel or Python.  A function essentially executes a set of instructions for doing something to an R object.  We created one earlier to make a greeting.
+Functions are the working parts of packages allowing you to manipulate objects or use them to create outputs, like maps or plots.  A function has arguments, or inputs that are required to make the function work.  Often this is just a dataframe or other R object, but sometimes there are a large number of options,.  We saw this earlier when we looked at the help pages for a dplyr function.
+We can also write our own functions.  This means we can use commonly recurring code easily, rather than copy-paste-ing it into each new script.  We can just write a function and then use it multiple times.    If you write enough functions, you could always create your own internal package so that you can easily call these functions in your work flow.  This is a topic for another time!
+
+A note here about data standards!  One of the frustrations of working in the LERC world is that all your data are so different in structure and format.  For programmatic users of LERC data (be that R, Python, or something else) it takes a lot of work to get data received from a LERC into our tool of preference.  IF you could all agree a standard for how data are shared, then that would make using it, and even combining it with data from other LERCs, much easier.  This may be a significant barrier to wider use of LERC data.  So please, think about standardising your data to make it easier for your users.  If you do this, you could develop an ALERC R package which could take care of a lot of data wrangling and presentation issues simply and be made available to everyone.
+
+Session – hopefully self explanatory, but it is the time you spend using R for a particular job.  If you close down R, nothing you will have done will be saved, unless you explicitly save it.  Entering code into the console runs it, but does not save the input or output anywhere outside that session.  So you have to do this consciously.
+
+Script – this is a document in which you write AND save code for execution in the console.  Writing code in a script does not run it, but it saves it so that it can be run again and again.  When you runt he code it runs in the console.  You will write a lot of scripts, they are the main way of carrying out cleaning, analysis and presentation of data in R.
+
+Project – a project is a discrete data analysis project.  It includes all of the data, code and outputs for one dataset.  If you do nothing else that you learn here today, use projects, they will make your life much easier.  It also pays to set up your projects in a standardised way so that you can easily reuse code to save yourself time.
+
+Assignment arrow - you have seen this used already.  It assigns values to objects.  For example:
+```{r assignment}
+
+x <- 5
+y <- 6
+
+x + y
+
+name <- "Dan"
+
+hello <- function(name){
+  paste("Hello", name)
+}
+
+greeting <- hello(name)
+greeting
+
+```
+The keyboard shortcut for the assignment arrow is alt + -
+
+The pipe - this is a handy notation for 'piping' date from one function to another.  I use this alot as it helps to make code readable.  Think of the pipe as 'AND THEN'.  For example:
+```{r pipe}
+
+"I want to do x AND THEN"
+"I want to do y"
+
+"x() %>% y()"
+
+```
+The keyboard shortcut for the pipe is shift + ctrl + m
+
+Loading libraries - R comes with a huge ecosystem of packages, over 27,000.  All these packages extend R's capabilities beyond what is included in base R.  While base R can do a lot, many of the things we are going to do today require additional packages.  You should have installed some using the script I sent you.  There are two things we need to do with libraries or packages - install them, and load them.
+
+Installing them means downloading them onto your computer to make the available.  This is like downloading any other type of file or programme from the internet, but RStudio makes it easy for you with the 'Packages' tab.
+
+To use the functions in the packages we need to load them, like so:
+```{r load libraries}
+
+library(dplyr)
+
+```
+
+The functions in the package {dplyr} are now available for us to use in our code.
+
+## Getting started
+Now we are going to create a project, write some code and create some outputs.
+The first thing we are going to do is create a project.  To do this go to File > New Project…
+You can also use the small blue button in the top right corner of RStudio to also create a new project.
+You won’t have all of the options I have (i.e. the version control option), but you should have the option to create a new project in a new directory or an existing directory.  
+Does everyone know what is meant by ‘directory’?  This means a folder on your computer.  Using an existing directory is useful if you have already created a folder and saved some data there.  If you created a folder on your computer for this course, then choose the existing directory option and navigate there. Otherwise choose ‘New Directory’ and create a new project.
+You will need to give the project a name.  A word on naming – R is case sensitive and also ‘space’ sensitive i.e. you have to type file names exactly.  I recommend that any file you create that you want to read in to R (or indeed anything else) does not have any spaces.  Use an underscore (_) to separate words or use camelCase to name files.  Keep them as short as possible, but make them meaningful.  Naming things is the hardest bit about programming.
+Now you have created a project, you should see in the ‘Files’ tab any files you already had in that directory
+
+My advice would also be to create the following folders within your project directory (you can do this is the 'Files' pane):
+* code - this will store your scripts
+* data - this will store your data!
+
+Others that I also use are:
+* maps - for maps I create
+* outputs - for all outputs, e.g. reports, figures etc...
+
+An RMarkdown report file must be saved in the root (or home) directory of your project.
+
+What we are going to do now is create a script, run some code, create some outputs.
+
+
+
+
+
+
+

@@ -1,0 +1,162 @@
+---
+title: "Species summary report"
+author: "Dan Carpenter"
+date: "03/01/2022"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# load libraries
+library(readr)
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(janitor)
+library(sf)
+library(tmap)
+library(tmaptools)
+library(OpenStreetMap)
+library(leaflet)
+library(ggplot2)
+library(rnrfa)
+
+# read data
+
+records <- read_csv("data/myrecords.csv")
+sac <- st_read("data/SACs.shp")
+
+```
+
+## Introduction
+
+This report provides a summary of the species recorded by Dan Carpenter, as well as a summary of the Special Areas of Conservation around Oxford.
+
+## Species records
+
+The following section provides a summary of species recorded in 2020 and 2021, largely during the lockdowns imposed to control the spread of coronavirus.
+
+```{r cleaning}
+
+# clean names
+records <- janitor::clean_names(records)
+
+# convert dates
+records$date <- lubridate::dmy(records$date)
+
+```
+
+A summary table of the species groups Dan recorded is presented below.  In total, 186 records were recorded across 13 species groups.
+
+```{r group_summary}
+
+grp <- records %>%
+  group_by(species_group) %>% 
+  count(name = "grp_n") %>% 
+  ungroup() %>% 
+  select(species_group, grp_n) %>% 
+  janitor::adorn_totals()
+
+knitr::kable(grp, col.names = c("Species group", "No. of records"))
+
+```
+
+The most recorded species are shown in the graph below.
+
+```{r freq_spp}
+
+spp2 <- records %>% 
+  group_by(common_name, species) %>% 
+  count() %>% 
+  ungroup() %>% 
+  arrange(desc(n)) %>% 
+  select(common_name, species, n)
+
+d <- spp2 %>% 
+  filter(n > 3) %>% 
+  ggplot(aes(x=common_name, fill=common_name, y=n)) +
+  geom_col()+
+  theme_light() +
+  theme(axis.text.x=element_text(angle=90,hjust=1)) +
+  ggtitle("Most recorded species") +
+  labs(x = "Common name", y = "No. of records", fill = "Common name")
+d
+
+```
+
+Below is an interactive wembap of the species records.
+
+```{r spp_webmap}
+
+# convert grid refs to E,N
+
+x <- osg_parse(records$map_ref)
+
+# write to data
+
+records$east <- x$easting
+records$north <- x$northing
+
+# create wkt from eastings and northings
+
+records$wkt <- paste0("POINT(", records$east, " ", records$north, ")")
+
+
+# convert to sf
+
+rs <- st_as_sf(records, wkt="wkt")
+class(rs)
+rs
+
+# set crs
+st_crs(rs) <- 27700
+rs
+
+# transform data for leaflet
+rs <- st_transform(rs, 4326)
+
+# create leaflet map
+
+m <- leaflet(rs) %>% 
+  addTiles() %>% 
+  addMarkers(popup = paste0("Species: ", rs$common_name,"<br>",
+                           "(", rs$species, ")"))
+m
+
+```
+
+## Special Areas of Conservation
+
+Below is a summary of Special Areas of Conservation (SACs) around Oxford.
+
+```{r}
+
+sacd <- as.data.frame(sac)
+
+sacd <- sac %>% 
+  mutate(area_ha = area/10000)
+
+
+```
+
+The mean are of the SACS is `r round(mean(sacd$area_ha), 2)` hectares, with a range of `r round(range(sacd$area_ha), 2)` hectares.  The largest SAC has an area of `r round(max(sacd$area_ha), 2)` hectares and the smallest `r round(min(sacd$area_ha), 2)` hectares.
+
+A map of the SACs is presented below.
+
+```{r sac_map}
+
+sac <- st_transform(sac, 4326)
+
+# read OSM raster data
+osm <- tmaptools::read_osm(sac, ext=1.1)
+
+tm <- tm_shape(osm) + 
+      tm_rgb() +
+    tm_shape(sac) + 
+      tm_fill("blue") + 
+      tm_borders("blue")
+tm
+
+```
+
