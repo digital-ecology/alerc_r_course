@@ -11,6 +11,9 @@
 .pdf
 .html
 
+# user-specified directories
+/maps
+
 # Example code in package build process
 *-Ex.R
 
