@@ -26,4 +26,4 @@ Session 2 will be concerned with producing reports in R, using the RMarkdown pac
 # Resources
 The repository contains data used in the course and R scripts to tackle specific tasks or problems.  The data included here is open data and licenced data has not been sahred.  Thsi means that not all of the code will run for non-ALERC users.
 
-The code is shared with a permissive licence (see lioccen file for details).
+The code is shared with a permissive licence (see licence file for details).
