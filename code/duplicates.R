@@ -19,6 +19,10 @@ dupes <- janitor::clean_names(dupes)
 # how important is a year for detecting duplicates? we may not know if we remove them
 dupes$date <- dmy(dupes$date)
 
+# add unique id column
+
+dupes <- dupes %>% mutate(id = row_number())
+
 
 # group_by to find duplicates ---------------------------------------------
 
@@ -26,7 +30,7 @@ dupes$date <- dmy(dupes$date)
 
 d1 <- dupes %>% 
   group_by(common_name, date, grid_ref) %>% 
-  add_count() %>% 
+  add_count() %>% # counts the number of records in each group and adds it in a column
   ungroup()
 
 # use dplyr::filter() to filter out records with a count > 1
@@ -49,7 +53,7 @@ d2 <- d2 %>%
 
 max(d2$n)
 
-# records with n=17 all share a common name, but are infact different records
+# records with n=17 all share a common name, but are in fact different records
 # add latin_name as a groping variable
 
 d3 <- dupes %>% 
@@ -77,6 +81,13 @@ d4 <- d4 %>%
 max(d4$n) # now max is 2, which is good
 
 # so we have identified duplicates, but we want to record that without deleting them. how?
-# add columns for unique_id (if there isn't one already) and duplicate
+# add a duplicate column
 # then join these data back to the original data
 
+dupes_clean <- d4 %>% 
+  mutate(duplicates = "duplicate") %>% 
+  select(id, duplicates)
+
+clean <- left_join(dupes, dupes_clean, by = "id")
+
+# now our original data has a column which identifies which are duplicates

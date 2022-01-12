@@ -37,11 +37,13 @@ Coming back to packages.  There is also a search function here, allowing you to 
 
 If you now click on the name ‘dplyr’ it will open up the help page (notice the change in tab) for the package.  Here are listed all of the functions in dplyr.  We can now click on the name of a function (lets choose add_count) to get the help page for the function.
 The help pages are all laid out in a similar way:
-    • Description tells you what the function does
-    • Usage tells you what each of the arguments for a function are
-    • Arguments list the arguments, what they mean and often what type of data they should be
-    • Value tells you what the function will return (e.g. a number, a string, a dataframe etc…)
-    • Examples provides examples of how to use the function.  These are incredibly useful!
+
+* Description tells you what the function does
+* Usage tells you what each of the arguments for a function are
+* Arguments list the arguments, what they mean and often what type of data they should be
+* Value tells you what the function will return (e.g. a number, a string, a dataframe etc…)
+* Examples provides examples of how to use the function.  These are incredibly useful!
+
 You will use the help pages a lot to work out what arguments you need to provide in your code.  For some functions, there are lots of arguments, and this is particularly true when making maps of graphics, as there is so much to control, such as colours and thickness of lines etc…  But this also means you can be incredibly specific about how something appears.
 
 Top right pane – Environment, History, Connections, Tutorial.  Other things will appear here as you use more of RStudio’s functionality.
@@ -61,7 +63,7 @@ I have introduced lots of new words there, so lets delve into the key things you
 
 Objects – everything in R is an object.  The significance of this will become clearer the more you use R, but suffice it to say, if you assign a value to something, you have created an object.  The utility of objects is that instead of having to run all of your code over and over again, you can assign things to an object, and then use that object again later.
 For example, you read into R a csv of data.  Instead of reading it in and then immediately doing all of your cleaning and analysis, you assign it to an object for later use.  Then instead of having to write out all of the code again, you just use the name of the object to represent data in your code.
-Here is an example. Greeting a user. [add code for this]
+Here is an example. Greeting a user.
 ```{r greeting}
 
 x <- "Dan"
@@ -84,7 +86,7 @@ A note here about data standards!  One of the frustrations of working in the LER
 
 Session – hopefully self explanatory, but it is the time you spend using R for a particular job.  If you close down R, nothing you will have done will be saved, unless you explicitly save it.  Entering code into the console runs it, but does not save the input or output anywhere outside that session.  So you have to do this consciously.
 
-Script – this is a document in which you write AND save code for execution in the console.  Writing code in a script does not run it, but it saves it so that it can be run again and again.  When you runt he code it runs in the console.  You will write a lot of scripts, they are the main way of carrying out cleaning, analysis and presentation of data in R.
+Script – this is a document in which you write AND save code for execution in the console.  Writing code in a script does not run it, but it saves it so that it can be run again and again.  When you run the code it runs in the console.  You will write a lot of scripts, they are the main way of carrying out cleaning, analysis and presentation of data in R.
 
 Project – a project is a discrete data analysis project.  It includes all of the data, code and outputs for one dataset.  If you do nothing else that you learn here today, use projects, they will make your life much easier.  It also pays to set up your projects in a standardised way so that you can easily reuse code to save yourself time.
 
@@ -142,10 +144,12 @@ You will need to give the project a name.  A word on naming – R is case sensit
 Now you have created a project, you should see in the ‘Files’ tab any files you already had in that directory
 
 My advice would also be to create the following folders within your project directory (you can do this is the 'Files' pane):
+
 * code - this will store your scripts
 * data - this will store your data!
 
 Others that I also use are:
+
 * maps - for maps I create
 * outputs - for all outputs, e.g. reports, figures etc...
 
