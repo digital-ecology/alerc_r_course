@@ -24,6 +24,6 @@ Session 2 - reports (11:30 – 13:00)
 Session 2 will be concerned with producing reports in R, using the RMarkdown package.  We will cover how to create data driven reports which include tables, maps and graphics created earlier in the course.
 
 # Resources
-The repository contains data used in the course and R scripts to tackle specific tasks or problems.  The data included here is open data and licenced data has not been sahred.  Thsi means that not all of the code will run for non-ALERC users.
+The repository contains data used in the course and R scripts to tackle specific tasks or problems.  The data included here is open data and licenced data has not been shared.  This means that not all of the code will run for non-ALERC users.
 
 The code is shared with a permissive licence (see licence file for details).
