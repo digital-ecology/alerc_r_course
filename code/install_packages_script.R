@@ -24,4 +24,4 @@ install.packages(c("readr",
                    "sf",
                    "janitor",
                    "rnrfa"
-                   ))
+                   ) dependencies = TRUE)

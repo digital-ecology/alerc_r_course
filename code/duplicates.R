@@ -54,7 +54,7 @@ d2 <- d2 %>%
 max(d2$n)
 
 # records with n=17 all share a common name, but are in fact different records
-# add latin_name as a groping variable
+# add latin_name as a grouping variable
 
 d3 <- dupes %>% 
   group_by(latin_name, date, grid_ref, location) %>% 

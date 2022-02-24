@@ -13,7 +13,7 @@ r <- janitor::clean_names(r)
 
 # convert grid refs to E,N
 
-x <- osg_parse(r$map_ref)
+x <- rnrfa::osg_parse(r$map_ref)
 
 # write to data
 
@@ -27,7 +27,7 @@ r$wkt <- paste0("POINT(", r$east, " ", r$north, ")")
 
 # convert to sf
 
-rs <- st_as_sf(r, wkt="wkt")
+rs <- sf::st_as_sf(r, wkt="wkt")
 class(rs)
 rs
 

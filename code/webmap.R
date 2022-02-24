@@ -7,6 +7,7 @@
 # load the required libraries
 library(leaflet)
 library(leaflet.extras)
+library(leaflet.esri)
 library(sf)
 library(htmlwidgets)
 
@@ -25,3 +26,23 @@ m
 
 # save the webmap as an html widget for incorporating into a website
 saveWidget(m, "map.html")
+
+library(leaflet.esri)
+
+m <- leaflet() %>% 
+  addTiles() %>% 
+  setView(-1.2576985, 51.751975, 11) %>% 
+  addEsriFeatureLayer(url = "https://services.arcgis.com/JJzESW51TqeY9uat/arcgis/rest/services/SSSI_England/FeatureServer/0",
+                      popupProperty = "SSSI_NAME",
+                      group = "SSSI")
+m
+
+m <- leaflet() %>% 
+  addTiles() %>% 
+  setView(-1.2576985, 51.751975, 11) %>% 
+  addPolygons(data = sac, group = "SAC", color = "red") %>% 
+  addEsriFeatureLayer(url = "https://services.arcgis.com/JJzESW51TqeY9uat/arcgis/rest/services/SSSI_England/FeatureServer/0",
+                      popupProperty = "SSSI_NAME",
+                      group = "SSSI") %>% 
+  addLayersControl(baseGroups = "Basemap", overlayGroups = c("SSSI", "SAC"))
+m

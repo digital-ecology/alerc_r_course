@@ -16,4 +16,10 @@ m <- tm_shape(osm) +
       tm_borders("blue")
 m
 
+m <- tm_shape(sac) +
+  tm_fill("blue") +
+  tm_borders("blue")
+
+m
+
 tmap_save(m, "maps/map.png")
